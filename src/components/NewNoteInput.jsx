@@ -31,6 +31,15 @@ export const NewNoteInput = ({
     setNoteColor(event.target.value);
   };
 
+  const handleAddNewNote = () => {
+    addNewNote({
+      noteText,
+      id: stickyNotesCount + 1,
+      noteColor,
+      position: { x: newNoteInputBox.x, y: newNoteInputBox.y },
+    });
+  };
+
   return (
     <div
       onClick={(event) => event.stopPropagation()}
@@ -62,14 +71,7 @@ export const NewNoteInput = ({
         rows="5"
       ></textarea>
       <button
-        onClick={() =>
-          addNewNote({
-            noteText,
-            id: stickyNotesCount + 1,
-            noteColor,
-            position: { x: newNoteInputBox.x, y: newNoteInputBox.y },
-          })
-        }
+        onClick={handleAddNewNote}
         disabled={!noteText}
         className="save-button"
       >

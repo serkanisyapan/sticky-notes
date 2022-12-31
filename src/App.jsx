@@ -59,7 +59,13 @@ function App() {
         />
       )}
       {stickyNotes &&
-        stickyNotes.map((stickyNote) => <StickyNote stickyNote={stickyNote} />)}
+        stickyNotes.map((stickyNote) => (
+          <StickyNote
+            onMouseEnter={() => setNoteMode("onNote")}
+            onMouseLeave={() => setNoteMode("addNote")}
+            stickyNote={stickyNote}
+          />
+        ))}
     </>
   );
 }

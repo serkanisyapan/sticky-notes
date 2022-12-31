@@ -1,7 +1,19 @@
+import { useState } from "react";
 import "./StickyNote.css";
-export const StickyNote = ({ stickyNote }) => {
+
+export const StickyNote = ({ stickyNote, onMouseEnter, onMouseLeave }) => {
+  const [showNoteText, setShowNoteText] = useState(false);
+
+  const handleClick = (event) => {
+    event.stopPropagation();
+    setShowNoteText(!showNoteText);
+  };
+
   return (
     <div
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      onClick={handleClick}
       className="note"
       style={{
         position: "absolute",
@@ -17,6 +29,14 @@ export const StickyNote = ({ stickyNote }) => {
       >
         {stickyNote.id}
       </span>
+      {showNoteText && (
+        <div
+          style={{ backgroundColor: stickyNote.noteColor }}
+          className="note-text"
+        >
+          {stickyNote.noteText}
+        </div>
+      )}
     </div>
   );
 };

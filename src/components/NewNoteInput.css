@@ -5,6 +5,7 @@
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.4);
   transform: translateX(-50%) translateY(40px);
   border-radius: 3px;
+  z-index: 99;
 }
 
 .note-number {
@@ -60,6 +61,6 @@
 }
 
 .save-button:disabled {
-  background-color: rgba(255, 232, 21, 0.384);
+  background-color: rgba(255, 232, 21, 0.481);
   cursor: auto;
 }
