@@ -9,12 +9,12 @@ const noteTypes = [
   },
   {
     name: "comment",
-    color: "red",
+    color: "#628E90",
     text: "Comment",
   },
   {
     name: "private-comment",
-    color: "yellow",
+    color: "#FF1E00",
     text: "Private Comment",
   },
 ];
