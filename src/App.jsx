@@ -1,18 +1,29 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
+import { NewNoteText } from "./components/NewNoteText";
 
 function App() {
+  const [noteMode, setNoteMode] = useState("addNote");
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (event) => {
+    setPosition({ x: event.pageX, y: event.pageY });
+  };
+
   useEffect(() => {
-    const handleKeyDown = (event) => {
-      console.log(event);
-    };
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("mousemove", handleMouseMove);
     return () => {
-      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
 
-  return;
+  return (
+    <>
+      {noteMode === "addNote" && (
+        <NewNoteText position={position} handleMouseMove={handleMouseMove} />
+      )}
+    </>
+  );
 }
 
 export default App;
