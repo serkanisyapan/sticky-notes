@@ -9,6 +9,7 @@ function App() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [stickyNotes, setStickyNotes] = useState([]);
   const [newNoteInputBox, setNewNoteInputBox] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
 
   const handleMouseMove = (event) => {
     setMousePosition({ x: event.pageX, y: event.pageY });
@@ -28,6 +29,16 @@ function App() {
   const addNewNote = (newNote) => {
     setStickyNotes((prev) => [...prev, newNote]);
     setNoteMode("addNote");
+  };
+
+  const handleDrag = () => {
+    setIsDragging(true);
+    setNoteMode("dragging");
+  };
+
+  const handleDragEnd = () => {
+    setTimeout(() => setIsDragging(false), 50);
+    setNoteMode("onNote");
   };
 
   const stickyNotesCount = stickyNotes.length;
@@ -64,6 +75,9 @@ function App() {
             onMouseEnter={() => setNoteMode("onNote")}
             onMouseLeave={() => setNoteMode("addNote")}
             stickyNote={stickyNote}
+            handleDrag={handleDrag}
+            handleDragEnd={handleDragEnd}
+            isDragging={isDragging}
           />
         ))}
     </>

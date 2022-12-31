@@ -1,5 +1,10 @@
 .note {
-  transform: translateX(-50%) translateY(40px);
+  position: absolute;
+  /* transform: translateX(-50%) translateY(40px); */
+  margin-top: 40px;
+  width: 300px;
+  margin-left: -150px;
+  padding: 10px;
 }
 
 .note-number {

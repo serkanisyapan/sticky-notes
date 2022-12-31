@@ -1,42 +1,54 @@
 import { useState } from "react";
+import Draggable from "react-draggable";
 import "./StickyNote.css";
 
-export const StickyNote = ({ stickyNote, onMouseEnter, onMouseLeave }) => {
+export const StickyNote = ({
+  stickyNote,
+  onMouseEnter,
+  onMouseLeave,
+  handleDrag,
+  handleDragEnd,
+  isDragging,
+}) => {
   const [showNoteText, setShowNoteText] = useState(false);
 
   const handleClick = (event) => {
     event.stopPropagation();
-    setShowNoteText(!showNoteText);
+    if (!isDragging) setShowNoteText(!showNoteText);
   };
 
   return (
-    <div
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      onClick={handleClick}
-      className="note"
-      style={{
-        position: "absolute",
-        left: stickyNote.position.x,
-        top: stickyNote.position.y,
-        color: stickyNote.color,
-        padding: "10px 10px",
-      }}
+    <Draggable
+      defaultPosition={{ x: stickyNote.position.x, y: stickyNote.position.y }}
+      onDrag={handleDrag}
+      onStop={handleDragEnd}
     >
-      <span
-        style={{ backgroundColor: stickyNote.noteColor }}
-        className="note-number"
+      <div
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        onClick={handleClick}
+        className="note"
+        style={{
+          left: 0,
+          top: 0,
+          color: stickyNote.color,
+        }}
       >
-        {stickyNote.id}
-      </span>
-      {showNoteText && (
-        <div
+        <span
           style={{ backgroundColor: stickyNote.noteColor }}
-          className="note-text"
+          className="note-number"
         >
-          {stickyNote.noteText}
-        </div>
-      )}
-    </div>
+          {stickyNote.id}
+        </span>
+        {showNoteText && (
+          <div
+            style={{ backgroundColor: stickyNote.noteColor }}
+            className="note-text"
+          >
+            {stickyNote.noteText}
+          </div>
+        )}
+      </div>
+    </Draggable>
   );
 };
