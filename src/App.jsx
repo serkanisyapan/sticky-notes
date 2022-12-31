@@ -25,7 +25,12 @@ function App() {
     }
   };
 
-  const stickyNoteCount = stickyNotes.length;
+  const addNewNote = (newNote) => {
+    setStickyNotes((prev) => [...prev, newNote]);
+    setNoteMode("addNote");
+  };
+
+  const stickyNotesCount = stickyNotes.length;
 
   useEffect(() => {
     window.addEventListener("mousemove", handleMouseMove);
@@ -48,8 +53,9 @@ function App() {
       )}
       {noteMode === "addingNewNote" && (
         <NewNoteInput
-          stickyNoteCount={stickyNoteCount}
+          stickyNotesCount={stickyNotesCount}
           newNoteInputBox={newNoteInputBox}
+          addNewNote={addNewNote}
         />
       )}
       {stickyNotes &&

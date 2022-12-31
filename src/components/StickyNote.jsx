@@ -1,6 +1,8 @@
+import "./StickyNote.css";
 export const StickyNote = ({ stickyNote }) => {
   return (
     <div
+      className="note"
       style={{
         position: "absolute",
         left: stickyNote.position.x,
@@ -9,7 +11,12 @@ export const StickyNote = ({ stickyNote }) => {
         padding: "10px 10px",
       }}
     >
-      Sticky Note
+      <span
+        style={{ backgroundColor: stickyNote.noteColor }}
+        className="note-number"
+      >
+        {stickyNote.id}
+      </span>
     </div>
   );
 };

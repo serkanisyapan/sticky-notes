@@ -19,8 +19,13 @@ const noteTypes = [
   },
 ];
 
-export const NewNoteInput = ({ newNoteInputBox, stickyNoteCount }) => {
+export const NewNoteInput = ({
+  newNoteInputBox,
+  stickyNotesCount,
+  addNewNote,
+}) => {
   const [noteColor, setNoteColor] = useState(noteTypes[0].color);
+  const [noteText, setNoteText] = useState("");
 
   const handleColorChange = (event) => {
     setNoteColor(event.target.value);
@@ -34,10 +39,10 @@ export const NewNoteInput = ({ newNoteInputBox, stickyNoteCount }) => {
         top: newNoteInputBox.y,
         left: newNoteInputBox.x,
       }}
-      className="new-note-input"
+      className="new-note-container"
     >
       <span style={{ backgroundColor: noteColor }} className="note-number">
-        {stickyNoteCount + 1}
+        {stickyNotesCount + 1}
       </span>
       <select
         style={{ backgroundColor: noteColor }}
@@ -50,7 +55,26 @@ export const NewNoteInput = ({ newNoteInputBox, stickyNoteCount }) => {
           </option>
         ))}
       </select>
-      <textarea className="note-input" cols="30" rows="5"></textarea>
+      <textarea
+        onChange={(event) => setNoteText(event.target.value)}
+        className="note-input"
+        cols="30"
+        rows="5"
+      ></textarea>
+      <button
+        onClick={() =>
+          addNewNote({
+            noteText,
+            id: stickyNotesCount + 1,
+            noteColor,
+            position: { x: newNoteInputBox.x, y: newNoteInputBox.y },
+          })
+        }
+        disabled={!noteText}
+        className="save-button"
+      >
+        Save Note
+      </button>
     </div>
   );
 };
