@@ -27,11 +27,12 @@ export const StickyNote = ({
         className="note"
         style={{
           color: stickyNote.color,
+          zIndex: showNoteText ? "999" : "1",
         }}
       >
         <span
           style={{ backgroundColor: stickyNote.noteColor }}
-          className="note-number"
+          className="note-number-note"
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
           onClick={handleClick}

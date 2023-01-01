@@ -7,7 +7,7 @@
   padding: 10px;
 }
 
-.note-number {
+.note-number-note {
   position: absolute;
   top: 0;
   left: 50%;
@@ -19,12 +19,12 @@
   justify-content: center;
   align-items: center;
   font-size: 24px;
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
-.note-number:hover {
-  opacity: 1;
+.note-number-note:hover {
   cursor: pointer;
+  opacity: 1;
 }
 
 .note-text {
