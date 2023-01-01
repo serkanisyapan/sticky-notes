@@ -9,7 +9,7 @@ export const NewNoteText = ({ position, handleMouseOver }) => {
         left: position.x + 20,
       }}
     >
-      Add New Note
+      New Note
     </div>
   );
 };

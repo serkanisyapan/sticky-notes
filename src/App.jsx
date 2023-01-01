@@ -7,7 +7,9 @@ import "./App.css";
 function App() {
   const [noteMode, setNoteMode] = useState("addNote");
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [stickyNotes, setStickyNotes] = useState([]);
+  const [stickyNotes, setStickyNotes] = useState(
+    JSON.parse(localStorage.getItem("stickyNotes")) || []
+  );
   const [newNoteInputBox, setNewNoteInputBox] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
 
@@ -36,9 +38,21 @@ function App() {
     setNoteMode("dragging");
   };
 
-  const handleDragEnd = () => {
+  const handleDragEnd = (event, data, id) => {
+    const draggedNote = stickyNotes.find((note) => note.id === id);
     setTimeout(() => setIsDragging(false), 50);
     setNoteMode("onNote");
+    const newStickyNotes = stickyNotes.map((note) => {
+      if (note.id === id) {
+        return {
+          ...note,
+          position: { x: data.x, y: data.y },
+        };
+      }
+      return note;
+    });
+    setStickyNotes(newStickyNotes);
+    console.log(event, data);
   };
 
   const stickyNotesCount = stickyNotes.length;
@@ -53,6 +67,10 @@ function App() {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("stickyNotes", JSON.stringify(stickyNotes));
+  }, [stickyNotes]);
 
   return (
     <>
@@ -72,6 +90,7 @@ function App() {
       {stickyNotes &&
         stickyNotes.map((stickyNote) => (
           <StickyNote
+            key={stickyNote.id}
             onMouseEnter={() => setNoteMode("onNote")}
             onMouseLeave={() => setNoteMode("addNote")}
             stickyNote={stickyNote}

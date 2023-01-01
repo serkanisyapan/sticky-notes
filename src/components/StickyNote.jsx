@@ -21,22 +21,20 @@ export const StickyNote = ({
     <Draggable
       defaultPosition={{ x: stickyNote.position.x, y: stickyNote.position.y }}
       onDrag={handleDrag}
-      onStop={handleDragEnd}
+      onStop={(event, data) => handleDragEnd(event, data, stickyNote.id)}
     >
       <div
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
-        onClick={handleClick}
         className="note"
         style={{
-          left: 0,
-          top: 0,
           color: stickyNote.color,
         }}
       >
         <span
           style={{ backgroundColor: stickyNote.noteColor }}
           className="note-number"
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+          onClick={handleClick}
         >
           {stickyNote.id}
         </span>
