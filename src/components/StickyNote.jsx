@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Draggable from "react-draggable";
 import "./StickyNote.css";
+import EditIcon from "../assets/edit.png";
+import DeleteIcon from "../assets/deleteicon.png";
 
 export const StickyNote = ({
   stickyNote,
@@ -9,8 +11,10 @@ export const StickyNote = ({
   handleDrag,
   handleDragEnd,
   isDragging,
+  handleDelete,
 }) => {
   const [showNoteText, setShowNoteText] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const handleClick = (event) => {
     event.stopPropagation();
@@ -24,6 +28,8 @@ export const StickyNote = ({
       onStop={(event, data) => handleDragEnd(event, data, stickyNote.id)}
     >
       <div
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
         className="note"
         style={{
           color: stickyNote.color,
@@ -33,17 +39,26 @@ export const StickyNote = ({
         <span
           style={{ backgroundColor: stickyNote.noteColor }}
           className="note-number-note"
-          onMouseEnter={onMouseEnter}
-          onMouseLeave={onMouseLeave}
           onClick={handleClick}
         >
-          {stickyNote.id}
+          {stickyNote.noteText.split(" ").join("").slice(0, 2)}
         </span>
         {showNoteText && (
           <div
             style={{ backgroundColor: stickyNote.noteColor }}
             className="note-text"
           >
+            <div className="icon-holder">
+              <button className="settings-button">
+                <img src={EditIcon} alt="edit note button" />
+              </button>
+              <button
+                onClick={(event) => handleDelete(event, stickyNote.id)}
+                className="settings-button"
+              >
+                <img src={DeleteIcon} alt="delete note button" />
+              </button>
+            </div>
             {stickyNote.noteText}
           </div>
         )}

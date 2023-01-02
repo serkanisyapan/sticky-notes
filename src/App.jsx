@@ -52,10 +52,16 @@ function App() {
       return note;
     });
     setStickyNotes(newStickyNotes);
-    console.log(event, data);
   };
 
-  const stickyNotesCount = stickyNotes.length;
+  const handleDelete = (event, id) => {
+    event.stopPropagation();
+    setStickyNotes(stickyNotes.filter((note) => note.id !== id));
+  };
+
+  const handleEdit = (event, id, text, color) => {
+    return;
+  };
 
   useEffect(() => {
     window.addEventListener("mousemove", handleMouseMove);
@@ -82,7 +88,6 @@ function App() {
       )}
       {noteMode === "addingNewNote" && (
         <NewNoteInput
-          stickyNotesCount={stickyNotesCount}
           newNoteInputBox={newNoteInputBox}
           addNewNote={addNewNote}
         />
@@ -97,6 +102,7 @@ function App() {
             handleDrag={handleDrag}
             handleDragEnd={handleDragEnd}
             isDragging={isDragging}
+            handleDelete={handleDelete}
           />
         ))}
     </>

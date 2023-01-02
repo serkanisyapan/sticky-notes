@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import "./NewNoteInput.css";
 
 const noteTypes = [
@@ -19,11 +20,7 @@ const noteTypes = [
   },
 ];
 
-export const NewNoteInput = ({
-  newNoteInputBox,
-  stickyNotesCount,
-  addNewNote,
-}) => {
+export const NewNoteInput = ({ newNoteInputBox, addNewNote }) => {
   const [noteColor, setNoteColor] = useState(noteTypes[0].color);
   const [noteText, setNoteText] = useState("");
 
@@ -34,7 +31,7 @@ export const NewNoteInput = ({
   const handleAddNewNote = () => {
     addNewNote({
       noteText,
-      id: stickyNotesCount + 1,
+      id: uuidv4(),
       noteColor,
       position: { x: newNoteInputBox.x, y: newNoteInputBox.y },
     });
@@ -50,14 +47,11 @@ export const NewNoteInput = ({
       }}
       className="new-note-container"
     >
-      <span style={{ backgroundColor: noteColor }} className="note-number">
-        {stickyNotesCount + 1}
-      </span>
-      <select
+      <span
         style={{ backgroundColor: noteColor }}
-        className="select-box"
-        onChange={handleColorChange}
-      >
+        className="note-number"
+      ></span>
+      <select className="select-box" onChange={handleColorChange}>
         {noteTypes.map((noteType, noteTypeID) => (
           <option key={noteTypeID} value={noteType.color}>
             {noteType.text}

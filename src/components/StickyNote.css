@@ -33,4 +33,26 @@
   max-width: 300px;
   word-wrap: break-word;
   color: black;
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-button {
+  width: 20px;
+  align-self: flex-end;
+  margin-bottom: 10px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+}
+
+.settings-button img {
+  width: 15px;
+}
+
+.icon-holder {
+  display: flex;
+  align-self: flex-end;
+  gap: 4px;
 }
