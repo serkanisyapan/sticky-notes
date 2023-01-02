@@ -37,7 +37,6 @@ function App() {
         setNoteMode("addNewNote");
       }
     }
-    console.log(event);
   };
 
   const addNewNote = (newNote) => {

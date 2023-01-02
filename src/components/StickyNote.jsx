@@ -15,7 +15,6 @@ export const StickyNote = ({
 }) => {
   const [showNoteText, setShowNoteText] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const textareaRef = useRef(null);
 
   const handleClick = (event) => {
     event.stopPropagation();
@@ -27,6 +26,7 @@ export const StickyNote = ({
       defaultPosition={{ x: stickyNote.position.x, y: stickyNote.position.y }}
       onDrag={handleDrag}
       onStop={(data) => handleDragEnd(data, stickyNote.id)}
+      handle="span"
     >
       <div
         className="note"
