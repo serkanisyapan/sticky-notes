@@ -12,6 +12,5 @@ body,
   height: 100%;
   background-color: rgba(39, 39, 39, 0.831);
   font-family: "Roboto Mono", sans-serif;
-  cursor: crosshair;
   overflow: auto;
 }

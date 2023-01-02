@@ -1,47 +1,57 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { NewNoteText } from "./components/NewNoteText";
 import { StickyNote } from "./components/StickyNote";
 import { NewNoteInput } from "./components/NewNoteInput";
 import "./App.css";
 
 function App() {
-  const [noteMode, setNoteMode] = useState("addNote");
+  const [noteMode, setNoteMode] = useState("addNewNote");
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [stickyNotes, setStickyNotes] = useState(
     JSON.parse(localStorage.getItem("stickyNotes")) || []
   );
   const [newNoteInputBox, setNewNoteInputBox] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
+  const canvasRef = useRef(null);
 
   const handleMouseMove = (event) => {
     setMousePosition({ x: event.pageX, y: event.pageY });
   };
 
   const handleClick = (event) => {
-    setNoteMode("addingNewNote");
-    setNewNoteInputBox({ x: event.pageX, y: event.pageY });
+    if (noteMode === "addNewNote") {
+      setNoteMode("addingNewNote");
+      setNewNoteInputBox({ x: event.pageX, y: event.pageY });
+    }
   };
 
   const handleKeyDown = (event) => {
     if (event.key === "Escape") {
-      setNoteMode("addNote");
+      setNoteMode("normalMode");
     }
+    if (event.key === "Tab") {
+      event.preventDefault();
+      if (noteMode === "addNewNote" || noteMode === "addingNewNote") {
+        setNoteMode("normalMode");
+      } else if (noteMode === "normalMode" || noteMode === "onNote") {
+        setNoteMode("addNewNote");
+      }
+    }
+    console.log(event);
   };
 
   const addNewNote = (newNote) => {
     setStickyNotes((prev) => [...prev, newNote]);
-    setNoteMode("addNote");
+    setNoteMode("normalMode");
   };
 
   const handleDrag = () => {
     setIsDragging(true);
-    setNoteMode("dragging");
+    setNoteMode("normalMode");
   };
 
-  const handleDragEnd = (event, data, id) => {
-    const draggedNote = stickyNotes.find((note) => note.id === id);
+  const handleDragEnd = (data, id) => {
     setTimeout(() => setIsDragging(false), 50);
-    setNoteMode("onNote");
     const newStickyNotes = stickyNotes.map((note) => {
       if (note.id === id) {
         return {
@@ -59,19 +69,21 @@ function App() {
     setStickyNotes(stickyNotes.filter((note) => note.id !== id));
   };
 
-  const handleEdit = (event, id, text, color) => {
-    return;
+  const handleEdit = (event, id) => {
+    setStickyNotes(
+      stickyNotes.map((note) => {
+        if (id === note.id) {
+          return { ...note, noteText: event.target.value };
+        } else {
+          return note;
+        }
+      })
+    );
   };
 
   useEffect(() => {
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("click", handleClick);
-    window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("click", handleClick);
-      window.removeEventListener("keydown", handleKeyDown);
-    };
+    canvasRef.current.focus();
+    document.title = "React Sticky Notes";
   }, []);
 
   useEffect(() => {
@@ -79,8 +91,16 @@ function App() {
   }, [stickyNotes]);
 
   return (
-    <>
-      {noteMode === "addNote" && (
+    <div
+      ref={canvasRef}
+      tabIndex={0}
+      className="canvas"
+      onClick={handleClick}
+      onMouseMove={handleMouseMove}
+      onKeyDown={handleKeyDown}
+      style={{ cursor: noteMode !== "addNewNote" ? "auto" : "crosshair" }}
+    >
+      {noteMode === "addNewNote" && (
         <NewNoteText
           position={mousePosition}
           handleMouseMove={handleMouseMove}
@@ -96,16 +116,17 @@ function App() {
         stickyNotes.map((stickyNote) => (
           <StickyNote
             key={stickyNote.id}
-            onMouseEnter={() => setNoteMode("onNote")}
-            onMouseLeave={() => setNoteMode("addNote")}
             stickyNote={stickyNote}
+            onMouseEnter={() => setNoteMode("onNote")}
+            onMouseLeave={() => setNoteMode("normalMode")}
             handleDrag={handleDrag}
             handleDragEnd={handleDragEnd}
-            isDragging={isDragging}
             handleDelete={handleDelete}
+            handleEdit={handleEdit}
+            isDragging={isDragging}
           />
         ))}
-    </>
+    </div>
   );
 }
 

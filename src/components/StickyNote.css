@@ -23,7 +23,6 @@
 }
 
 .note-number-note:hover {
-  cursor: pointer;
   opacity: 1;
 }
 
@@ -52,7 +51,14 @@
 }
 
 .icon-holder {
-  display: flex;
   align-self: flex-end;
-  gap: 4px;
+}
+
+.edit-note-area {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 3px;
+  resize: none;
+  font-size: 18px;
 }

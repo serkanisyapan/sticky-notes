@@ -1,8 +1,7 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Draggable from "react-draggable";
-import "./StickyNote.css";
-import EditIcon from "../assets/edit.png";
 import DeleteIcon from "../assets/deleteicon.png";
+import "./StickyNote.css";
 
 export const StickyNote = ({
   stickyNote,
@@ -12,9 +11,11 @@ export const StickyNote = ({
   handleDragEnd,
   isDragging,
   handleDelete,
+  handleEdit,
 }) => {
   const [showNoteText, setShowNoteText] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const textareaRef = useRef(null);
 
   const handleClick = (event) => {
     event.stopPropagation();
@@ -25,11 +26,9 @@ export const StickyNote = ({
     <Draggable
       defaultPosition={{ x: stickyNote.position.x, y: stickyNote.position.y }}
       onDrag={handleDrag}
-      onStop={(event, data) => handleDragEnd(event, data, stickyNote.id)}
+      onStop={(data) => handleDragEnd(data, stickyNote.id)}
     >
       <div
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
         className="note"
         style={{
           color: stickyNote.color,
@@ -37,9 +36,14 @@ export const StickyNote = ({
         }}
       >
         <span
-          style={{ backgroundColor: stickyNote.noteColor }}
+          style={{
+            backgroundColor: stickyNote.noteColor,
+            cursor: isDragging ? "grab" : "pointer",
+          }}
           className="note-number-note"
           onClick={handleClick}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
         >
           {stickyNote.noteText.split(" ").join("").slice(0, 2)}
         </span>
@@ -49,9 +53,6 @@ export const StickyNote = ({
             className="note-text"
           >
             <div className="icon-holder">
-              <button className="settings-button">
-                <img src={EditIcon} alt="edit note button" />
-              </button>
               <button
                 onClick={(event) => handleDelete(event, stickyNote.id)}
                 className="settings-button"
@@ -59,7 +60,28 @@ export const StickyNote = ({
                 <img src={DeleteIcon} alt="delete note button" />
               </button>
             </div>
-            {stickyNote.noteText}
+            <div
+              onDoubleClick={(event) => {
+                event.stopPropagation();
+                setIsEditing(true);
+              }}
+              onClick={(event) => event.stopPropagation()}
+            >
+              {!isEditing ? (
+                stickyNote.noteText
+              ) : (
+                <textarea
+                  className="edit-note-area"
+                  cols="30"
+                  rows="5"
+                  style={{ backgroundColor: stickyNote.color }}
+                  value={stickyNote.noteText}
+                  type="text"
+                  onBlur={() => setIsEditing(false)}
+                  onChange={(event) => handleEdit(event, stickyNote.id)}
+                />
+              )}
+            </div>
           </div>
         )}
       </div>
