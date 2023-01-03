@@ -97,8 +97,14 @@ function App() {
       onClick={handleClick}
       onMouseMove={handleMouseMove}
       onKeyDown={handleKeyDown}
-      style={{ cursor: noteMode !== "addNewNote" ? "auto" : "crosshair" }}
+      style={{
+        cursor: noteMode !== "addNewNote" ? "auto" : "crosshair",
+      }}
     >
+      <div className="instructions">
+        <span>Tab (Toggle New Note Mode)</span>
+        <span>Double click on note text to edit</span>
+      </div>
       {noteMode === "addNewNote" && (
         <NewNoteText
           position={mousePosition}
