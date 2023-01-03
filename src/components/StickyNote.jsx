@@ -25,7 +25,7 @@ export const StickyNote = ({
     <Draggable
       defaultPosition={{ x: stickyNote.position.x, y: stickyNote.position.y }}
       onDrag={handleDrag}
-      onStop={(data) => handleDragEnd(data, stickyNote.id)}
+      onStop={(data, event) => handleDragEnd(data, stickyNote.id, event)}
       handle="span"
     >
       <div
@@ -55,7 +55,7 @@ export const StickyNote = ({
             <div className="icon-holder">
               <button
                 onClick={(event) => handleDelete(event, stickyNote.id)}
-                className="settings-button"
+                className="delete-button"
               >
                 <img src={DeleteIcon} alt="delete note button" />
               </button>

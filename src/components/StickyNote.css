@@ -1,6 +1,5 @@
 .note {
   position: absolute;
-  /* transform: translateX(-50%) translateY(40px); */
   margin-top: 40px;
   width: 300px;
   margin-left: -150px;
@@ -20,6 +19,7 @@
   align-items: center;
   font-size: 24px;
   opacity: 0.6;
+  color: white;
 }
 
 .note-number-note:hover {
@@ -31,12 +31,12 @@
   border-radius: 5px;
   max-width: 300px;
   word-wrap: break-word;
-  color: black;
+  color: white;
   display: flex;
   flex-direction: column;
 }
 
-.settings-button {
+.delete-button {
   width: 20px;
   align-self: flex-end;
   margin-bottom: 10px;
@@ -46,7 +46,7 @@
   display: flex;
 }
 
-.settings-button img {
+.delete-button img {
   width: 15px;
 }
 

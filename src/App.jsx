@@ -49,13 +49,13 @@ function App() {
     setNoteMode("normalMode");
   };
 
-  const handleDragEnd = (data, id) => {
+  const handleDragEnd = (data, id, event) => {
     setTimeout(() => setIsDragging(false), 50);
     const newStickyNotes = stickyNotes.map((note) => {
       if (note.id === id) {
         return {
           ...note,
-          position: { x: data.x, y: data.y },
+          position: { x: event.x, y: event.y },
         };
       }
       return note;
@@ -92,8 +92,8 @@ function App() {
   return (
     <div
       ref={canvasRef}
-      tabIndex={0}
       className="canvas"
+      tabIndex={0}
       onClick={handleClick}
       onMouseMove={handleMouseMove}
       onKeyDown={handleKeyDown}
