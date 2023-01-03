@@ -1,0 +1,9 @@
+.instructions {
+  display: flex;
+  width: 20%;
+  flex-direction: column;
+  color: white;
+  padding: 15px;
+  gap: 10px;
+  font-size: 15px;
+}

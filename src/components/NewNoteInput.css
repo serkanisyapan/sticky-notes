@@ -1,4 +1,6 @@
 .new-note-container {
+  display: flex;
+  flex-direction: column;
   max-width: 350px;
   padding: 15px;
   background-color: #fff;
@@ -50,14 +52,16 @@
 }
 
 .save-button {
-  width: 100%;
+  width: 35%;
   height: 40px;
-  border-radius: 3px;
-  margin-top: 3px;
+  border-radius: 30px;
+  padding: 5px;
+  margin-top: 7px;
   cursor: pointer;
   background-color: rgba(255, 232, 21, 0.916);
   color: rgb(0, 0, 0);
   font-size: 18px;
+  align-self: flex-end;
 }
 
 .save-button:disabled {

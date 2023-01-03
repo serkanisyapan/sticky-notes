@@ -3,6 +3,7 @@ import { NewNoteText } from "./components/NewNoteText";
 import { StickyNote } from "./components/StickyNote";
 import { NewNoteInput } from "./components/NewNoteInput";
 import "./App.css";
+import { Instructions } from "./components/Instructions";
 
 function App() {
   const [noteMode, setNoteMode] = useState("addNewNote");
@@ -101,10 +102,7 @@ function App() {
         cursor: noteMode !== "addNewNote" ? "auto" : "crosshair",
       }}
     >
-      <div className="instructions">
-        <span>Tab (Toggle New Note Mode)</span>
-        <span>Double click on note text to edit</span>
-      </div>
+      <Instructions />
       {noteMode === "addNewNote" && (
         <NewNoteText
           position={mousePosition}
